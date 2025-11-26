@@ -1,0 +1,36 @@
+# .github/workflows/simple_run.yml
+
+name: Simple Python Run PoC
+
+# 1. Trigger the workflow on 'push' events to the 'main' branch
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# 2. Define the jobs that will run in parallel or sequence
+jobs:
+  build-and-run:
+    # Define the runner environment (virtual machine)
+    runs-on: ubuntu-latest
+
+    # 3. Define the steps (sequential tasks) within the job
+    steps:
+      # Checkout the code from the repo
+      - uses: actions/checkout@v4
+
+      # Set up the Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          # Use a common Python version
+          python-version: '3.x' 
+
+      # Execute the script
+      - name: Execute hello.py script
+        run: python hello.py
+
+      # Optional: Add a simple shell command step
+      - name: Display completion message
+        run: echo "The workflow job has finished running the Python script."
